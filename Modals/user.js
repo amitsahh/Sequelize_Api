@@ -17,15 +17,15 @@ const User = sequelize.define(
       type: DataTypes.INTEGER,
       allowNull: false,
       unique: true,
-
       validate: {
-        isNumeric: true,
-        isMobile: function (value) {
+        isMobileNumber(value) {
+          // Validate mobile number format
           if (!/^\d{10}$/.test(value)) {
             throw new Error("Mobile number must be 10 digits long");
           }
         },
       },
+      
       // allowNull defaults to true
     },
     gender: {
@@ -76,7 +76,7 @@ const User = sequelize.define(
   },
   {
     // Other model options go here
-    tableName: "users",
+    tableName: "usertable",
   }
 );
 
