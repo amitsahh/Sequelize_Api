@@ -61,7 +61,7 @@ const Page = () => {
         setPassworderr("password is wrong");
       }
       console.log(error.message);
-      setErrorMessage("Incorrect email or password"); // Set error message for login failure
+      setErrorMessage("Incorrect email or password"); 
       setSuccessMessage("");
     }
   };

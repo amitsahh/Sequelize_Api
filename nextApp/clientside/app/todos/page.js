@@ -2,7 +2,7 @@
 
 import React, { useState, useEffect } from "react";
 import axios from "axios";
-import TodoModal from "../ modal/page"; // Adjust the import path as per your project structure
+import TodoModal from "../ modal/page"; 
 import { useRouter } from "next/navigation";
 
 const PageYes = () => {
