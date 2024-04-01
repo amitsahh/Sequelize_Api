@@ -1,30 +1,29 @@
- 
- "use client";
+"use client";
 
- import React, { useState, useEffect } from 'react';
+import React, { useState, useEffect } from "react";
 
 const TodoModal = ({ isOpen, onClose, todoToUpdate, onSubmit }) => {
   const [formData, setFormData] = useState({
-    Name: '',
-    Description: '',
-    Time: '',
-    Status: '',
+    Name: "",
+    Description: "",
+    Time: "",
+    Status: "",
   });
 
   // Function to handle form submission for creating or updating todo
   const handleSubmit = async (e) => {
     e.preventDefault();
     setFormData({
-                Name: '',
-                Description: '',
-                Time: '',
-                Status: '',
-             })
+      Name: "",
+      Description: "",
+      Time: "",
+      Status: "",
+    });
     try {
       await onSubmit(formData);
       onClose(); // Close the modal after successful operation
     } catch (error) {
-      console.error('Error:', error);
+      console.error("Error:", error);
       // Handle error (e.g., show error message to the user)
     }
   };
@@ -43,19 +42,32 @@ const TodoModal = ({ isOpen, onClose, todoToUpdate, onSubmit }) => {
   }, [todoToUpdate]);
 
   return (
-    <div className={`fixed z-10 top-0 left-0 w-full h-full flex justify-center items-center ${isOpen ? 'block' : 'hidden'}`}>
+    <div
+      className={`fixed z-10 top-0 left-0 w-full h-full flex justify-center items-center ${
+        isOpen ? "block" : "hidden"
+      }`}
+    >
       <div className="modal-overlay absolute w-full h-full bg-gray-900 opacity-50"></div>
 
       <div className="modal-container bg-white w-1/2 md:max-w-md mx-auto rounded shadow-lg z-50 overflow-y-auto">
         <div className="modal-content py-4 text-left px-6">
           <div className="flex justify-between items-center pb-3">
-            <p className="text-2xl font-bold">{todoToUpdate ? 'Update Todo' : 'Create Todo'}</p>
-            <button className="modal-close" onClick={onClose}>&times;</button>
+            <p className="text-2xl font-bold">
+              {todoToUpdate ? "Update Todo" : "Create Todo"}
+            </p>
+            <button className="modal-close" onClick={onClose}>
+              &times;
+            </button>
           </div>
 
           <form onSubmit={handleSubmit}>
             <div className="mb-4">
-              <label className="block text-gray-700 text-sm font-bold mb-2" htmlFor="Name">Name</label>
+              <label
+                className="block text-gray-700 text-sm font-bold mb-2"
+                htmlFor="Name"
+              >
+                Name
+              </label>
               <input
                 className="shadow appearance-none border rounded w-full py-2 px-3 text-gray-700 leading-tight focus:outline-none focus:shadow-outline"
                 id="Name"
@@ -68,7 +80,12 @@ const TodoModal = ({ isOpen, onClose, todoToUpdate, onSubmit }) => {
               />
             </div>
             <div className="mb-4">
-              <label className="block text-gray-700 text-sm font-bold mb-2" htmlFor="Description">Description</label>
+              <label
+                className="block text-gray-700 text-sm font-bold mb-2"
+                htmlFor="Description"
+              >
+                Description
+              </label>
               <input
                 className="shadow appearance-none border rounded w-full py-2 px-3 text-gray-700 leading-tight focus:outline-none focus:shadow-outline"
                 id="Description"
@@ -81,7 +98,12 @@ const TodoModal = ({ isOpen, onClose, todoToUpdate, onSubmit }) => {
               />
             </div>
             <div className="mb-4">
-              <label className="block text-gray-700 text-sm font-bold mb-2" htmlFor="Time">Time</label>
+              <label
+                className="block text-gray-700 text-sm font-bold mb-2"
+                htmlFor="Time"
+              >
+                Time
+              </label>
               <input
                 className="shadow appearance-none border rounded w-full py-2 px-3 text-gray-700 leading-tight focus:outline-none focus:shadow-outline"
                 id="Time"
@@ -94,7 +116,12 @@ const TodoModal = ({ isOpen, onClose, todoToUpdate, onSubmit }) => {
               />
             </div>
             <div className="mb-4">
-              <label className="block text-gray-700 text-sm font-bold mb-2" htmlFor="Status">Status</label>
+              <label
+                className="block text-gray-700 text-sm font-bold mb-2"
+                htmlFor="Status"
+              >
+                Status
+              </label>
               <select
                 className="shadow appearance-none border rounded w-full py-2 px-3 text-gray-700 leading-tight focus:outline-none focus:shadow-outline"
                 id="Status"
@@ -112,7 +139,7 @@ const TodoModal = ({ isOpen, onClose, todoToUpdate, onSubmit }) => {
                 type="submit"
                 className="bg-blue-500 hover:bg-blue-700 text-white font-bold py-2 px-4 rounded focus:outline-none focus:shadow-outline"
               >
-                {todoToUpdate ? 'Update' : 'Create'}
+                {todoToUpdate ? "Update" : "Create"}
               </button>
             </div>
           </form>
@@ -125,8 +152,7 @@ const TodoModal = ({ isOpen, onClose, todoToUpdate, onSubmit }) => {
 export default TodoModal;
 
 //  import React, { useState, useEffect } from 'react';
- 
- 
+
 //  const TodoModal = ({ isOpen, onClose, todoToUpdate, onSubmit }) => {
 //    const [formData, setFormData] = useState({
 //      Name: '',
@@ -134,7 +160,7 @@ export default TodoModal;
 //      Time: '',
 //      Status: '',
 //    });
- 
+
 //    // Function to handle form submission for creating or updating todo
 //    const handleSubmit = async (e) => {
 
@@ -153,20 +179,20 @@ export default TodoModal;
 //        // Handle error (e.g., show error message to the user)
 //      }
 //    };
- 
+
 //    // Function to handle form input changes
 //    const handleChange = (e) => {
 //      const { name, value } = e.target;
 //      setFormData({ ...formData, [name]: value });
 //    };
- 
+
 //    // Set initial form data if todoToUpdate is provided (for updating)
 //    useEffect(() => {
 //      if (todoToUpdate) {
 //        setFormData(todoToUpdate);
 //      }
 //    }, [todoToUpdate]);
- 
+
 //    return (
 //      <div className={`modal ${isOpen ? 'show' : ''}`}>
 //        <div className="modal-content">
@@ -177,10 +203,10 @@ export default TodoModal;
 //            <input type="text" name="Description" value={formData.Description} onChange={handleChange} placeholder="Description" required />
 //            <input type="time" name="Time" value={formData.Time} onChange={handleChange} placeholder="Time" required />
 //            <select name="Status" value={formData.Status} onChange={handleChange} required>
-             
+
 //              <option value="in_progress">In Progress</option>
 //              <option value="completed">Completed</option>
-             
+
 //            </select>
 //            <button type="submit">{todoToUpdate ? 'Update' : 'Create'}</button>
 //          </form>
@@ -188,9 +214,8 @@ export default TodoModal;
 //      </div>
 //    );
 //  };
- 
-//  export default TodoModal;
 
+//  export default TodoModal;
 
 //  import React, { useState } from 'react';
 // import axios from 'axios';

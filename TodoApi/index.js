@@ -5,15 +5,12 @@ const User = require("./Modals/user");
 const Todo = require("./Modals/todo");
 
 const route = require("./routes/userRoute");
-// const jwt = require('jsonwebtoken');
-
+ 
 // const bcrypt = require('bcrypt');
 // const bigtables = require ("../Api/Migration/models/bigtable")
 
 app.use(cors());
 app.use(express.json());
-
- 
 
 app.use("/", route);
 
@@ -67,61 +64,39 @@ app.post("/users", async (req, res) => {
 
 app.post("/login", async (req, res) => {
   try {
-      const { email, password } = req.body;
+    const { email, password } = req.body;
 
-      const user = await User.findOne({ where: { email: email } });
+    const user = await User.findOne({ where: { email: email } });
 
-      if (!user) {
-          return res.status(401).json({ error: "Incorrect email" });
-      }
+    if (!user) {
+      console.log("User not found");
+      res.status(401).json({ error: "Incorrect email" });
+      return;
+    }
 
-      // Check password
-      const isPasswordValid = password === user.password;
-      if (!isPasswordValid) {
-          return res.status(402).json({ error: "Incorrect password" });
-      }
+    const isPasswordValid = password === user.password;
 
-     // Generate JWT token
-      // const token = jwt.sign({ userId: user.id }, 'secret123', { expiresIn: '1h' });
+    if (isPasswordValid) {
+      console.log("Login successful");
+      console.log("User details:", user.toJSON());
+      res.status(200).json({   user, message: "Login successful" });
+    } else {
+      console.log("Incorrect password");
+      res.status(402).json({ error: "Incorrect password" });
+    }
+    // const token = jwt.sign(
+    //   { userId: user.id, name: user.name, email: user.email }, 
+    //   "secretKey",
+    //   { expiresIn: '1h' } // Expiration
+    // );
 
-      // res.cookie('token', token, { httpOnly: true, expires: new Date(Date.now() + 3600000) }); // Set token in cookie, expires in 1 hour
-      res.status(200).json({ user, token });
+    // res.setHeader('Authorization', `Bearer ${token}`, 'username', `name ${user.name}`);
+    // res.json({ token }); 
   } catch (error) {
-      console.error("Error logging in:", error.message);
-      res.status(500).json({ error: "Internal server error" });
+    console.error("Error logging in:", error.message);
+    res.status(500).json({ error: "Internal server error" });
   }
 });
-
-
-// app.post("/login", async (req, res) => {
-//   try {
-//     const { email, password } = req.body;
-
-//     const user = await User.findOne({ where: { email: email } });
-
-//     if (!user) {
-//       console.log("User not found");
-//       res.status(401).json({ error: "Incorrect email" });
-//       return;
-//     }
-
-//     const isPasswordValid = password === user.password;
-
-//     if (isPasswordValid) {
-//       console.log("Login successful");
-//       console.log("User details:", user.toJSON());
-//       res.status(200).json({   user, message: "Login successful" });
-//     } else {
-//       console.log("Incorrect password");
-//       res.status(402).json({ error: "Incorrect password" });
-//     }
-       
-     
-//   } catch (error) {
-//     console.error("Error logging in:", error.message);
-//     res.status(500).json({ error: "Internal server error" });
-//   }
-// });
 
 app.post("/todos", async (req, res) => {
   try {
@@ -201,9 +176,9 @@ app.delete("/todos/:id", async (req, res) => {
   }
 });
 
-User.sync({ force: false});
-Todo.sync({ force: false });
-//user.drop();
+ User.sync({ force: false});
+ Todo.sync({ force: false });
+// User.drop();
 
 app.listen(7000, "localhost", () => {
   console.log("server is working on http://localhost:7000)");
